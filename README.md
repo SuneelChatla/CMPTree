@@ -33,6 +33,10 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
     - fformula: could be a list of two formulas with only fixed effects that are not part of tree fitting.
     - vcformula: list of two formulas with moderator variables for both lamda and nu parameters. The moderator variables for both lambda and nu parameters are need not  be the same.
     - data: dataset
+    - eta: Learning rate. Small values take more number of iterations and vice versa. For example, 0.1.
+    - mini.size: Minimum number of observations in each terminal node of the base learner. Default is 20
+    - M:Number of terminal nodes for the base learners. For example, 5, 10 or 15
+    - nBoost: Number of boosting iterations. For example, 500.
 
 
 
