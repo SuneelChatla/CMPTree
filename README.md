@@ -1,5 +1,5 @@
-# CMP Distribution
-Conway-Maxwell-Poisson MOB tree and Boost Model
+
+#Conway-Maxwell-Poisson MOB tree and Boost Model
 
 The files contain routines to fit CMPMOB trees and CMPBoost models. The arguments are similar for both functions.
 
@@ -38,7 +38,8 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
 
 For more details about the model formulations and estimation procedures, please refer to 
 
-**Suneel Babu Chatla, Galit Shmueli**, Tree-based Semi-varying Coefficient Model for the COM-Poisson distribution.
+**Suneel Babu Chatla, Galit Shmueli**, Tree-based Semi-varying Coefficient Model for the COM-Poisson Distribution.
+
 
 ## Example:
 
