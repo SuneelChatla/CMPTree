@@ -4,7 +4,7 @@
 The files contain routines to fit CMPMOB trees and CMPBoost models. The arguments are similar for both functions.
 
 1.  cmpmob(formula, fformula, vcformula, data,...):
-    Each formula is a list of two formulas for both lambda and nu parameters.
+    
     main inputs: 
     - formula: could be a list of two formulas for both lambda and nu or just a single formula for lambda and in this case
     the parameter nu is treated as constant.
