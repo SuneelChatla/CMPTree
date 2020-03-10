@@ -9,7 +9,7 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
     - formula: could be a list of two formulas for both lambda and nu or just a single formula for lambda and in this case
     the parameter nu is treated as constant.
     - fformula: could be a list of two formulas with only fixed effects that are not part of tree fitting.
-    - vcformula: a formulas with moderator variables for both lamda and nu parameters. In the CMPMOB moderator variables for both lambda and nu parameters are considered to be the same.
+    - vcformula: a formula with moderator variables for both lamda and nu parameters. In the CMPMOB, the moderator variables for both lambda and nu parameters are considered to be the same.
     - data: dataset
     
 2.  Partial.Mob(obj, name.vars)
