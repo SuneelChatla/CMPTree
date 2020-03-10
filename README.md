@@ -12,14 +12,18 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
     - vcformula: a formula with moderator variables for both lamda and nu parameters. In the CMPMOB, the moderator variables for both lambda and nu parameters are considered to be the same.
     - data: dataset
     
+
 2.  Partial.Mob(obj, name.vars)
     - obj: fitted CMPMOB tree 
     - name.vars: names of the variables needed to estimate partial effects.
     
-3.  plot(obj$tree): plots the CMPMOB tree
+
+
+3.  plot(obj$tree): plots the CMPMOB tree\
     plot.gam.cmp(obj$fixed): plots the smooths if the fixed effects are s() terms.
     
     
+
 4.  Boost.Tree(formula, fformula, vcformula, data,...): 
       Fits the CMPBoost model.
       
@@ -29,6 +33,8 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
     - fformula: could be a list of two formulas with only fixed effects that are not part of tree fitting.
     - vcformula: list of two formulas with moderator variables for both lamda and nu parameters. The moderator variables for both lambda and nu parameters are need not  be the same.
     - data: dataset
+
+
 
 5.  Partial.Boost(obj, name.vars)
     - obj: fitted CMPBoost model 
