@@ -44,6 +44,8 @@ For more details about the model formulations and estimation procedures, please 
 ## Example:
 
 ###  Data simulation example
+`library(cmp)`\
+`#`\
   `data.sim.boost <- function(n,sd)`\
 `{`\
   `set.seed(sd)`\
