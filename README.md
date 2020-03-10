@@ -1,5 +1,5 @@
 
-#Conway-Maxwell-Poisson MOB tree and Boost Model
+# Conway-Maxwell-Poisson MOB tree and Boost Model
 
 The files contain routines to fit CMPMOB trees and CMPBoost models. The arguments are similar for both functions.
 
