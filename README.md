@@ -48,7 +48,7 @@ The files contain routines to fit CMPMOB trees and CMPBoost models. The argument
 
 For more details about the model formulations and estimation procedures, please refer to 
 
-**Suneel Babu Chatla, Galit Shmueli**, Tree-based Semi-varying Coefficient Model for the COM-Poisson Distribution.
+**Suneel Babu Chatla, Galit Shmueli (2020) **, A tree-based semi-varying coefficient model for the COM-Poisson distribution. Journal of Computational and Graphical Statistics, 29(4), 827-846.
 
 
 ## Example:
