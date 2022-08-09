@@ -715,56 +715,56 @@ summary.Boost=function(boost,var.names,len=12,nam="Variable Importance")
 ################################################################################
 ## Out-sample prediction based on boosting.
 
-
-
-pred.Boost=function(obj,new.data=NULL)
-{
-  if(is.null(new.data)) data=obj$data else data=new.data
-  cf1 <- res$rform[[1]]; cf2 <- res$rform[[2]]
-  # preparing bases gam set-up
-  G <- gam.perf1(cf1,data = data,family = cmp(), method="GCV.Cp",optimizer=c("perf","magic"),control=gam.control(), scale=0,select=FALSE,knots=NULL,sp=NULL,min.sp=NULL,H=NULL,gamma=1,fit=FALSE, paraPen=NULL,G=NULL,in.out=NULL,drop.unused.levels=TRUE,drop.intercept=NULL)
-  G1 <- gam.perf1(cf2,data = data,family = cmp(),offset=NULL, method="GCV.Cp",optimizer=c("perf","magic"),control=gam.control(), scale=0,select=FALSE,knots=NULL,sp=NULL,min.sp=NULL,H=NULL,gamma=1,fit=FALSE, paraPen=NULL,G=NULL,in.out=NULL,drop.unused.levels=TRUE,drop.intercept=NULL) #,...
-########################################
-  
-  pred.lam=obj$f0.hat.lam
-  pred.nu <- obj$f0.hat.nu
-  dev.out=c()
-  varReg.lam <- G$X[,c(1:obj$nvc.lam)]
-  varReg.nu <- G1$X[,c(1:obj$nvc.nu)]
-  varPart.lam <- obj$varPart1
-  varPart.nu <- obj$varPart2
-  coef.mat.lam <- matrix(rep(obj$base$coefficients[c(1:obj$nvc.lam)],G$n),G$n,obj$nvc.lam,byrow = TRUE)
-  coef.mat.nu <- matrix(rep(obj$base$coefficients.nu[c(1:obj$nvc.nu)],G1$n),G1$n,obj$nvc.nu,byrow = TRUE) 
-  nBoost <- obj$iter
-  eta <- obj$eta
-  #
-  
-  
-  for(iBoost in 1:nBoost)
-  {
-    # arguments: xmat,covariate,split.rule,leaf.summary
-    # for lambda
-    spt.pred.lam=split.predict(xmat=varPart.lam,covariate=varReg.lam,split.rule=obj$split.krit.lam[iBoost],leaf.summary=obj$model.est.lam[[iBoost]])
-    pred.lam=pred.lam+spt.pred.lam$pred*eta
-    coef.mat.lam=coef.mat.lam+spt.pred.lam$coefs*eta
-    # for nu
-    spt.pred.nu=split.predict(xmat=varPart.nu,covariate=varReg.nu,split.rule=obj$split.krit.nu[iBoost],leaf.summary=obj$model.est.nu[[iBoost]])
-    pred.nu=pred.nu+spt.pred.nu$pred*eta
-    coef.mat.nu=coef.mat.nu+spt.pred.nu$coefs*eta
-    
-    #
-    nlLambda <- apply(G$X[,c(1:obj$nvc.lam)]*coef.mat.lam,1,sum)
-    nlNu <- apply(G1$X[,c(1:obj$nvc.nu)]*coef.mat.nu,1,sum)
-    #
-    ylogfact.vec=sapply(G$y, LogFactorial)
-    dev=CMP.dev(G$y,ylogfact.vec,lmu =nlLambda ,lnu=nlNu)
-    
-    dev.out=c(dev.out,dev)
-    
-  }
-  return(list(pred.lam=pred.lam,pred.nu=pred.nu,dev=dev.out,coefs.lam=coef.mat.lam,coefs.nu=coef.mat.nu))
-
- }
+# 
+# 
+# pred.Boost=function(obj,new.data=NULL)
+# {
+#   if(is.null(new.data)) data=obj$data else data=new.data
+#   cf1 <- obj$rform[[1]]; cf2 <- obj$rform[[2]]
+#   # preparing bases gam set-up
+#   G <- gam.perf1(cf1,data = data,family = cmp(), method="GCV.Cp",optimizer=c("perf","magic"),control=gam.control(), scale=0,select=FALSE,knots=NULL,sp=NULL,min.sp=NULL,H=NULL,gamma=1,fit=FALSE, paraPen=NULL,G=NULL,in.out=NULL,drop.unused.levels=TRUE,drop.intercept=NULL)
+#   G1 <- gam.perf1(cf2,data = data,family = cmp(),offset=NULL, method="GCV.Cp",optimizer=c("perf","magic"),control=gam.control(), scale=0,select=FALSE,knots=NULL,sp=NULL,min.sp=NULL,H=NULL,gamma=1,fit=FALSE, paraPen=NULL,G=NULL,in.out=NULL,drop.unused.levels=TRUE,drop.intercept=NULL) #,...
+# ########################################
+#   
+#   pred.lam=obj$f0.hat.lam
+#   pred.nu <- obj$f0.hat.nu
+#   dev.out=c()
+#   varReg.lam <- G$X[,c(1:obj$nvc.lam)]
+#   varReg.nu <- G1$X[,c(1:obj$nvc.nu)]
+#   varPart.lam <- obj$varPart1
+#   varPart.nu <- obj$varPart2
+#   coef.mat.lam <- matrix(rep(obj$base$coefficients[c(1:obj$nvc.lam)],G$n),G$n,obj$nvc.lam,byrow = TRUE)
+#   coef.mat.nu <- matrix(rep(obj$base$coefficients.nu[c(1:obj$nvc.nu)],G1$n),G1$n,obj$nvc.nu,byrow = TRUE) 
+#   nBoost <- obj$iter
+#   eta <- obj$eta
+#   #
+#   
+#   
+#   for(iBoost in 1:nBoost)
+#   {
+#     # arguments: xmat,covariate,split.rule,leaf.summary
+#     # for lambda
+#     spt.pred.lam=split.predict(xmat=varPart.lam,covariate=varReg.lam,split.rule=obj$split.krit.lam[iBoost],leaf.summary=obj$model.est.lam[[iBoost]])
+#     pred.lam=pred.lam+spt.pred.lam$pred*eta
+#     coef.mat.lam=coef.mat.lam+spt.pred.lam$coefs*eta
+#     # for nu
+#     spt.pred.nu=split.predict(xmat=varPart.nu,covariate=varReg.nu,split.rule=obj$split.krit.nu[iBoost],leaf.summary=obj$model.est.nu[[iBoost]])
+#     pred.nu=pred.nu+spt.pred.nu$pred*eta
+#     coef.mat.nu=coef.mat.nu+spt.pred.nu$coefs*eta
+#     
+#     #
+#     nlLambda <- apply(G$X[,c(1:obj$nvc.lam)]*coef.mat.lam,1,sum)
+#     nlNu <- apply(G1$X[,c(1:obj$nvc.nu)]*coef.mat.nu,1,sum)
+#     #
+#     ylogfact.vec=sapply(G$y, LogFactorial)
+#     dev=CMP.dev(G$y,ylogfact.vec,lmu =nlLambda ,lnu=nlNu)
+#     
+#     dev.out=c(dev.out,dev)
+#     
+#   }
+#   return(list(pred.lam=pred.lam,pred.nu=pred.nu,dev=dev.out,coefs.lam=coef.mat.lam,coefs.nu=coef.mat.nu))
+# 
+#  }
 
 
 # pred.Boost=function(varPart,varReg,varY,obj.Boost,cols.coef,nBoost,nu)
@@ -882,7 +882,7 @@ Partial.Boost=function(obj,name.vars)
         # cat(ilevels,': for lambda \n')
         # varPart,obj,lnu.flag=1
         pred.cur=partial.pred(varPart=varPart.lam.cur, obj = obj,lnu.flag = 1)
-        coef.lam[ilevels.no,]=apply(pred.cur$coefs,2,mean)
+        coef.lam[ilevels.no,]=apply(pred.cur$coefs,2,function(x) mean(x,na.rm = TRUE))
         fits.lam[varPart.lam[,name.var]==ilevels,j]=varReg.lam[varPart.lam[,name.var]==ilevels,]%*%apply(pred.cur$coefs,2,mean)
       }
       if (is.null(var.levels.nu)){
@@ -901,7 +901,7 @@ Partial.Boost=function(obj,name.vars)
         # cat(ilevels,': for nu \n')
         # varPart,obj,lnu.flag=1
         pred.cur=partial.pred(varPart=varPart.nu.cur, obj = obj,lnu.flag = 2)
-        coef.nu[ilevels.no,]=apply(pred.cur$coefs,2,mean)
+        coef.nu[ilevels.no,]=apply(pred.cur$coefs,2,function(x) mean(x,na.rm = TRUE))
         fits.nu[varPart.nu[,name.var]==ilevels,j]=varReg.nu[varPart.nu[,name.var]==ilevels,]%*%apply(pred.cur$coefs,2,mean)
       }
       ufits.nu[,j] <- fits.nu[order(varPart.lam[,name.var]),j]
@@ -953,6 +953,15 @@ split.estimate=function(leaves,covar,modelest,cols)
   {
     imod.tmp=(as.numeric(leaves)==modelest[imod,1])
     if(length(cols)==1) coef.mat[imod.tmp]=matrix(rep(modelest[imod,cols],sum(imod.tmp)),ncol=length(cols),byrow=T) else  coef.mat[imod.tmp,]=matrix(rep(modelest[imod,cols],sum(imod.tmp)),ncol=length(cols),byrow=T)
+    ###################################################################
+    ### The source code for the CMPMOB and CMPBoost functions are available on https://github.com/SuneelChatla/CMPTree
+    ### Need to source the functions from github. Please note that its not a package.
+    ###################################################################
+
+    source_url("https://raw.githubusercontent.com/SuneelChatla/CMPTree/master/mobvc.R")
+    source_url("https://raw.githubusercontent.com/SuneelChatla/CMPTree/master/bt-cmp.R")
+    source_url("https://raw.githubusercontent.com/SuneelChatla/CMPTree/master/glm-cmp.R")
+    source_url("https://raw.githubusercontent.com/SuneelChatla/CMPTree/master/mob_pvalue.R")
   }
   return(list(pred=apply(coef.mat*covar,1,sum),coefs=coef.mat))
 }
