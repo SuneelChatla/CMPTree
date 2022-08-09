@@ -1,7 +1,5 @@
-
 ################################################################
 ######## Modified function to fit MOB ##########################
-
 cmpmob <- function(formula, fformula = NULL, vcformula = NULL, data, weights = NULL, control.gam = gam.control(), control.mob = mob_control(), sflag = FALSE, gamma = 1, cperc = TRUE, ...) {
   # for main formula
   if (missing(data)) data <- environment(formula)
